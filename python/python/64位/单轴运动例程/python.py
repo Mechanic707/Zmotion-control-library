@@ -1,11 +1,11 @@
 import platform
 import ctypes
 
-# ÔËĞĞ»·¾³ÅĞ¶Ï
+# è¿è¡Œç¯å¢ƒåˆ¤æ–­
 systype = platform.system()
 if systype == 'Windows':
     if platform.architecture()[0] == '64bit':
-        zauxdll = ctypes.WinDLL('./zauxdll64.dll')
+        zauxdll = ctypes.WinDLL('../åŠ¨æ€åº“/zauxdll.dll')
         print('Windows x64')
     else:
         zauxdll = ctypes.WinDLL('./zauxdll.dll')
@@ -22,14 +22,14 @@ else:
 
 class ZMCWrapper:
 
-    # ³õÊ¼»¯²ÎÊı
+    # åˆå§‹åŒ–å‚æ•°
     def __init__(self):
         self.handle = ctypes.c_void_p()
         self.sys_ip = ""
         self.sys_info = ""
         self.is_connected = False
 
-    ###############################¿ØÖÆÆ÷Á¬½Ó################################################
+    ################################æ§åˆ¶å™¨è¿æ¥################################################
     def connect(self, ip, console=[]):
         if self.handle.value is not None:
             self.disconnect()
@@ -49,14 +49,14 @@ class ZMCWrapper:
         console.append(self.sys_info)
         return ret
 
-    # ¶Ï¿ªÁ¬½Ó
+    # æ–­å¼€è¿æ¥
     def disconnect(self):
         ret = zauxdll.ZAux_Close(self.handle)
         self.is_connected = False
         return ret
 
-###############################Öá²ÎÊıÉèÖÃ################################################
-    # ÉèÖÃÖáÀàĞÍ
+###############################è½´å‚æ•°è®¾ç½®################################################
+    # è®¾ç½®è½´ç±»å‹
     def set_atype(self, iaxis, iValue):
         ret = zauxdll.ZAux_Direct_SetAtype(self.handle, iaxis, iValue)
         if ret == 0:
@@ -65,7 +65,7 @@ class ZMCWrapper:
             print("Set Axis (", iaxis, ") Atype fail!")
         return ret
 
-    # ÉèÖÃÂö³åµ±Á¿
+    # è®¾ç½®è„‰å†²å½“é‡
     def set_units(self, iaxis, iValue):
         ret = zauxdll.ZAux_Direct_SetUnits(self.handle, iaxis, ctypes.c_float(iValue))
         if ret == 0:
@@ -74,7 +74,7 @@ class ZMCWrapper:
             print("Set Axis (", iaxis, ") Units fail!")
         return ret
 
-    # ÉèÖÃÖá¼ÓËÙ¶È
+    # è®¾ç½®è½´åŠ é€Ÿåº¦
     def set_accel(self, iaxis, iValue):
         ret = zauxdll.ZAux_Direct_SetAccel(self.handle, iaxis, ctypes.c_float(iValue))
         if ret == 0:
@@ -83,7 +83,7 @@ class ZMCWrapper:
             print("Set Accel (", iaxis, ") Accel fail!")
         return ret
 
-    # ÉèÖÃÖá¼õËÙ¶È
+    # è®¾ç½®è½´å‡é€Ÿåº¦
     def set_decel(self, iaxis, iValue):
         ret = zauxdll.ZAux_Direct_SetDecel(self.handle, iaxis, ctypes.c_float(iValue))
         if ret == 0:
@@ -92,7 +92,7 @@ class ZMCWrapper:
             print("Set Axis (", iaxis, ") Decel fail!")
         return ret
 
-    # ÉèÖÃÖáÔËĞĞËÙ¶È
+    # è®¾ç½®è½´è¿è¡Œé€Ÿåº¦
     def set_speed(self, iaxis, iValue):
         ret = zauxdll.ZAux_Direct_SetSpeed(self.handle, iaxis, ctypes.c_float(iValue))
         if ret == 0:
@@ -101,8 +101,8 @@ class ZMCWrapper:
             print("Set Axis (", iaxis, ") Speed fail!")
         return ret
 
-###############################Öá²ÎÊı¶ÁÈ¡################################################
-    # ¶ÁÈ¡ÖáÀàĞÍ
+###############################è½´å‚æ•°è¯»å–################################################
+    # è¯»å–è½´ç±»å‹
     def get_atype(self, iaxis):
         iValue = (ctypes.c_int)()
         ret = zauxdll.ZAux_Direct_GetAtype(self.handle, iaxis, ctypes.byref(iValue))
@@ -112,7 +112,7 @@ class ZMCWrapper:
             print("Get Axis (", iaxis, ") Atype fail!")
         return ret
 
-    # ¶ÁÈ¡ÖáÂö³åµ±Á¿
+    # è¯»å–è½´è„‰å†²å½“é‡
     def get_untis(self, iaxis):
         iValue = (ctypes.c_float)()
         ret = zauxdll.ZAux_Direct_GetUnits(self.handle, iaxis, ctypes.byref(iValue))
@@ -122,7 +122,7 @@ class ZMCWrapper:
             print("Get Axis (", iaxis, ") Units fail!")
         return ret
 
-    # ¶ÁÈ¡Öá¼ÓËÙ¶È
+     # è¯»å–è½´åŠ é€Ÿåº¦
     def get_accel(self, iaxis):
         iValue = (ctypes.c_float)()
         ret = zauxdll.ZAux_Direct_GetAccel(self.handle, iaxis, ctypes.byref(iValue))
@@ -132,7 +132,7 @@ class ZMCWrapper:
             print("Get Axis (", iaxis, ") Accel fail!")
         return ret
 
-    # ¶ÁÈ¡Öá¼õËÙ¶È
+    # è¯»å–è½´å‡é€Ÿåº¦
     def get_decel(self, iaxis):
         iValue = (ctypes.c_float)()
         ret = zauxdll.ZAux_Direct_GetDecel(self.handle, iaxis, ctypes.byref(iValue))
@@ -142,7 +142,7 @@ class ZMCWrapper:
             print("Get Axis (", iaxis, ") Decel fail!")
         return ret
 
-    # ¶ÁÈ¡ÖáÔËĞĞËÙ¶È
+    # è¯»å–è½´è¿è¡Œé€Ÿåº¦
     def get_speed(self, iaxis):
         iValue = (ctypes.c_float)()
         ret = zauxdll.ZAux_Direct_GetSpeed(self.handle, iaxis, ctypes.byref(iValue))
@@ -152,8 +152,8 @@ class ZMCWrapper:
             print("Get Axis (", iaxis, ") Speed fail!")
         return ret
 
-###############################ÔË¶¯µ÷ÓÃ####################################################
-    # Ö±ÏßÔË¶¯
+###############################è¿åŠ¨è°ƒç”¨####################################################
+    # ç›´çº¿è¿åŠ¨
     def move(self, iaxis, iValue):
         ret = zauxdll.ZAux_Direct_Single_Move(self.handle, iaxis, ctypes.c_float(iValue))
         if ret == 0:
@@ -162,7 +162,7 @@ class ZMCWrapper:
             print("Axis (", iaxis, ") Move Fail")
         return ret
 
-    # ³ÖĞøÔË¶¯
+    # æŒç»­è¿åŠ¨
     def vmove(self, iaxis, idir):
         ret = zauxdll.ZAux_Direct_Single_Vmove(self.handle, iaxis, idir)
         if ret == 0:
@@ -172,22 +172,22 @@ class ZMCWrapper:
         return ret
 
 
-################################¹¦ÄÜÊ¹ÓÃ######################################################
+################################åŠŸèƒ½ä½¿ç”¨######################################################
 zaux = ZMCWrapper()
-# Á¬½Ó¿ØÖÆÆ÷ip   Ä¬ÈÏ192.168.0.11
+# è¿æ¥æ§åˆ¶å™¨ip   é»˜è®¤192.168.0.11
 zaux.connect("192.168.0.11")
-# ÉèÖÃÖá0²ÎÊı
+# è®¾ç½®è½´0å‚æ•°
 zaux.set_atype(0, 1)
 zaux.set_units(0, 100)
 zaux.set_accel(0, 1000)
 zaux.set_decel(0, 1000)
 zaux.set_speed(0, 1000)
-# »ñÈ¡Öá0²ÎÊı
+# è·å–è½´0å‚æ•°
 zaux.get_atype(0)
 zaux.get_untis(0)
 zaux.get_accel(0)
 zaux.get_decel(0)
 zaux.get_speed(0)
-# ÔË¶¯
-zaux.move(0, 100)  # Öá0Ö±ÏßÔË¶¯ÒÆ¶¯100
+# è¿åŠ¨
+zaux.move(0, 100)  # ï¿½ï¿½0Ö±ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½Æ¶ï¿½100
 
