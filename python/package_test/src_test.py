@@ -223,7 +223,7 @@ def iaxis_stop(ZMCWrapper, iaxis):
     ZMCWrapper.iaxis_stop(iaxis)
 
 
-UNITS = 1000
+UNITS = 400
 
 def set_parameter(ZMCWrapper, iaxis, speed):
     '''
